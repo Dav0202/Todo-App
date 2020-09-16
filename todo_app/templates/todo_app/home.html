@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>Todo App</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <center>
+                    <h2>Welcome to <span style="color:#e67e22">Todo</span> App</h2> 
+                </center>
+            </div>
+        </div>
+        <br>
+        <form class="row" method="POST" action="{% url 'addtask' %}">
+            {% csrf_token %}
+            <div class="col">
+                <label for="name" style="font-weight: bold;">Task Name</label>
+                <input type="name" class="form-control" id="name" name="name" placeholder="Enter your task name" autofocus>
+            </div>
+            <div class="col">
+                <label for="priority" style="font-weight: bold;">Task Details</label>
+                <input type="text" class="form-control" name= "priority" placeholder="Enter the details of this task" autofocus>
+            </div>
+            <div class="col">
+                <label for="date">Task Due Date</label>
+                <input type="date" id="date" class="form-control" name="date" placeholder="Select Date" autofocus>
+              </div>
+           
+            <div class="col" style="padding-top: 31px;">
+                <button type="submit" class="btn btn-primary">Create</button>
+            </div>
+        </form>
+        <br>
+        <div class="row">
+            <div class="col-md-12" style="color: red;">
+                {{msg}}
+            </div>
+        </div><br>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th scope="col">Task ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Priority</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for task in tasks%}        
+                        <tr>
+                            <th scope="row">{{task.id}}</th>
+                            <td>{{task.name}}</td>
+                            <td>{{task.priority}}</td>
+                            <td>{{task.date}}</td>
+                            <td title="Marking the task as Complete will delete the task from the list.">
+                                <a href="home/{{task.id}}" class="btn btn-outline-primary">
+                                    Mark as Complete
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor%}
+                    </tbody>
+                  </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
